@@ -1,0 +1,54 @@
+import React from "react";
+import { Editor } from "@tinymce/tinymce-react";
+import { Controller } from "react-hook-form";
+
+function RTE({ name, control, label, defaultValue = "" }) {
+  return (
+    <div className="w-full">
+      {label && (
+        <label className="block mb-2 text-[10px] uppercase tracking-[0.15em] font-bold text-zinc-500 ml-1">
+          {label}
+        </label>
+      )}
+
+      <Controller
+        name={name || "content"}
+        control={control}
+        render={({ field: { onChange } }) => (
+          <div className="border border-zinc-200 focus-within:border-zinc-800 transition-colors duration-200">
+            <Editor
+            apiKey='doei8xj0cvqw85d0ctxksqyg6lwn2kd7s21g1o1vwks6ejvc'
+              initialValue={defaultValue}
+              init={{
+                height: 500,
+                menubar: true,
+                branding: false,
+                // Minimalist Gray Skin
+                skin: "oxide",
+                content_css: "default",
+                plugins: [
+                  "advlist", "autolink", "lists", "link", "image", "charmap", "preview",
+                  "anchor", "searchreplace", "visualblocks", "code", "fullscreen",
+                  "insertdatetime", "media", "table", "code", "help", "wordcount",
+                ],
+                toolbar:
+                  "undo redo | blocks | image | bold italic forecolor | alignleft aligncenter bold italic forecolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help",
+                content_style: `
+                  body { 
+                    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+                    font-size: 14px; 
+                    color: #3f3f46; 
+                    background-color: #fff;
+                  }
+                `,
+              }}
+              onEditorChange={onChange}
+            />
+          </div>
+        )}
+      />
+    </div>
+  );
+}
+
+export default RTE;
