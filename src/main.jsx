@@ -28,6 +28,7 @@ const router = createBrowserRouter([
       {
         path: '/login',
         element: (
+          // authentication={false} means only LOGGED OUT users can see this
           <AuthLayout authentication={false}>
             <Login />
           </AuthLayout>
@@ -44,6 +45,7 @@ const router = createBrowserRouter([
       {
         path: '/all-posts',
         element: (
+          // authentication (default true) means only LOGGED IN users can see this
           <AuthLayout authentication>
             <AllPost />
           </AuthLayout>
@@ -67,15 +69,17 @@ const router = createBrowserRouter([
       },
       {
         path: '/post/:slug',
-        element: <Post /> // Removed authentication requirement for viewing posts (optional)
+        element: <Post /> 
+        // Publicly viewable - great for SEO!
       },
     ]
   }
 ])
 
 createRoot(document.getElementById('root')).render(
+  <StrictMode>
     <Provider store={store}>
       <RouterProvider router={router} />
     </Provider>
-
+  </StrictMode>
 )

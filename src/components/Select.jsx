@@ -43,8 +43,11 @@ function Select({
                     `}
                 >
                     {options?.map((option) => (
-                        <option key={option} value={option}>
-                            {option}
+                        <option 
+                            key={typeof option === 'object' ? option.value : option} 
+                            value={typeof option === 'object' ? option.value : option}
+                        >
+                            {typeof option === 'object' ? option.label : option}
                         </option>
                     ))}
                 </select>

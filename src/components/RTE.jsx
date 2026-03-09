@@ -14,35 +14,38 @@ function RTE({ name, control, label, defaultValue = "" }) {
       <Controller
         name={name || "content"}
         control={control}
-        render={({ field: { onChange } }) => (
+        render={({ field: { onChange, value } }) => (
           <div className="border border-zinc-200 focus-within:border-zinc-800 transition-colors duration-200">
             <Editor
-            apiKey='doei8xj0cvqw85d0ctxksqyg6lwn2kd7s21g1o1vwks6ejvc'
-              initialValue={defaultValue}
+              apiKey='doei8xj0cvqw85d0ctxksqyg6lwn2kd7s21g1o1vwks6ejvc'
+              // defaultValue aur value dono handle kar liye taaki Edit mode mein content miss na ho
+              value={value || defaultValue}
               init={{
                 height: 500,
                 menubar: true,
                 branding: false,
-                // Minimalist Gray Skin
+                statusbar: false, // Cleaner look ke liye statusbar hataya
                 skin: "oxide",
                 content_css: "default",
                 plugins: [
                   "advlist", "autolink", "lists", "link", "image", "charmap", "preview",
                   "anchor", "searchreplace", "visualblocks", "code", "fullscreen",
-                  "insertdatetime", "media", "table", "code", "help", "wordcount",
+                  "insertdatetime", "media", "table", "help", "wordcount",
                 ],
                 toolbar:
-                  "undo redo | blocks | image | bold italic forecolor | alignleft aligncenter bold italic forecolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help",
+                  "undo redo | blocks | image | bold italic forecolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help",
                 content_style: `
                   body { 
                     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
                     font-size: 14px; 
                     color: #3f3f46; 
                     background-color: #fff;
+                    line-height: 1.6;
                   }
                 `,
               }}
-              onEditorChange={onChange}
+              // Jab bhi editor mein change ho, react-hook-form ko update karo
+              onEditorChange={(content) => onChange(content)}
             />
           </div>
         )}
